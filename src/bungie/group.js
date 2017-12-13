@@ -1,18 +1,22 @@
 import ApiModel from './apiModel';
 
-export default class User extends ApiModel{
+export default class Group extends ApiModel{
     get primaryKey() {
-       return "membershipId";
+        return "id";
     }
 
     async get(id) {
-        let user = await this.api.get(`User/GetBungieNetUserById/${id}/`);
+        let group = await this.api.get(`GroupV2/${id}/`);
 
-        return this.wrapResponse(user);
+        if(group) {
+            group.id = id;
+        }
+
+        return this.wrapResponse(group);
     }
 
-    async getAliases(id) {
-        return await this.recordCall('User/GetUserAliases/{id}/', "aliases", id);
+    async getMembers(id) {
+        return await this.recordCall('GroupV2/{id}/Members/', "members", id, "results");
     }
 
     async search(query) {
