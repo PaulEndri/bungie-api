@@ -1,14 +1,14 @@
 {
-  "name": "api",
-  "version": "1.0.0",
+  "name": "@pxp/bungie-node-sdk",
+  "version": "0.0.1",
   "description": "",
-  "main": "lib/api.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src/ --out-dir lib/"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Paul Endri",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.17.1",
     "dotenv": "^4.0.0"

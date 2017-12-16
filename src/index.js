@@ -1,5 +1,7 @@
-import BungieApi from './api/bungieApi';
+import User from './bungie/user';
+import Group from './bungie/group';
 
 export default {
-    test() {}
-}
+    User : User,
+    Group : Group
+};
