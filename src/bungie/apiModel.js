@@ -1,12 +1,21 @@
+import API from '../api/bungieApi';
+
 export default class ApiModel{
-    constructor(api) {
-        this.api = api;
+    constructor(id) {
+        this.api = API;
         this.isRecord = false;
-        this.primaryKey = false;
+
+        if(typeof this.get === 'function' && !isNaN(id)) {
+            return this.get(id);
+        } 
     }
 
     get id() {
         return this[this.primaryKey];
+    }
+
+    static async callAPI(route) {
+        return await API.get(route);
     }
 
     async recordCall(route, key, id, sub = false) {
@@ -41,4 +50,4 @@ export default class ApiModel{
 
         return Object.assign(Object.create(Object.getPrototypeOf(this)), this, obj);
     }
-}
+};

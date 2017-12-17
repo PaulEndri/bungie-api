@@ -3,7 +3,7 @@ import env   from '../env/env';
 
 const API_ROOT = "https://www.bungie.net/Platform";
 const HEADER   = {
-    'X-API-KEY': env.APIKey,
+    'X-API-KEY': env.BUNGIE_API_KEY,
     'Content-Type': 'application/json'
 }
 
@@ -23,6 +23,7 @@ export default class BungieApi {
                     }
                 })
                 .catch(e => {
+                    console.log(e);
                     reject(e);
                 })
         })

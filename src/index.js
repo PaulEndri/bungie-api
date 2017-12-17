@@ -1,7 +1,9 @@
-import User from './bungie/user';
-import Group from './bungie/group';
+import User from './bungie/models/user';
+import Group from './bungie/models/group';
+import API from './api/bungieApi';
 
-export default {
-    User : User,
-    Group : Group
+module.exports = {
+    User:  User,
+    Group: Group,
+    API:   API
 };
