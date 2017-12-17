@@ -10,29 +10,36 @@ export default class ApiModel{
         } 
     }
 
+    set id(val) {
+        return this[this.primaryKey] = val;
+    }
+
     get id() {
         return this[this.primaryKey];
     }
 
-    static async callAPI(route) {
-        return await API.get(route);
+    static callAPI(route) {
+        return API.get(route);
     }
 
-    async recordCall(route, key, id, sub = false) {
+    recordCall(route, key, id, sub = false) {
         let callId  = this.processId(id);
-        let results = await this.api.get(route.replace("{id}", callId));
         
-        if(this.isRecord === true) {
-            if(sub !== false) {
-                results = results[sub];
-            }
-
-            this[key] = results;
+        return this.api
+            .get(route.replace("{id}", callId))
+            .then(results => {
+                if(this.isRecord === true) {
+                    if(sub !== false) {
+                        results = results[sub];
+                    }
         
-            return this;
-        }
-
-        return results;
+                    this[key] = results;
+                
+                    return this;
+                }
+        
+                return results;
+            });
     }
 
     processId(id) {
