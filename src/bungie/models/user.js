@@ -1,4 +1,4 @@
-import ApiModel from './apiModel';
+import ApiModel from '../apiModel';
 
 export default class User extends ApiModel{
     get primaryKey() {

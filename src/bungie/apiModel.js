@@ -11,15 +11,46 @@ export default class ApiModel{
     }
 
     set id(val) {
+        if(this.primaryKey == 'id') {
+            return this._id = val;
+        }
         return this[this.primaryKey] = val;
     }
 
     get id() {
+        if(this.primaryKey == 'id') {
+            return this._id;
+        }
+
         return this[this.primaryKey];
     }
 
     static callAPI(route) {
         return API.get(route);
+    }
+
+    clean() {
+        if(this.isRecord === false) {
+            return false;
+        }
+
+        let cleanObject = {};
+
+        for(var key of this._metaData) {
+            cleanObject[key] = this[key];
+        }
+
+        return cleanObject;
+    }
+
+    processId(id) {
+        if(!id && this.isRecord === true && this.primaryKey !== false) {
+            return this.id;
+        } else if(this.primaryKey === false && !id && this.record === true) {
+            throw Error("Please specify a primary key on a custom api model if it is to act as a proxy.");
+        }
+
+        return id;
     }
 
     recordCall(route, key, id, sub = false) {
@@ -42,19 +73,9 @@ export default class ApiModel{
             });
     }
 
-    processId(id) {
-        if(!id && this.isRecord === true && this.primaryKey !== false) {
-            return this.id;
-        } else if(this.primaryKey === false && !id && this.record === true) {
-            throw Error("Please specify a primary key on a custom api model if it is to act as a proxy.");
-        }
-
-        return id;
-    }
-
     wrapResponse(obj) {
-        obj.isRecord = true;
-
+        obj._metaData = Object.keys(obj);        
+        obj.isRecord  = true;
         return Object.assign(Object.create(Object.getPrototypeOf(this)), this, obj);
     }
 };

@@ -1,4 +1,4 @@
-import ApiModel from './apiModel';
+import ApiModel from '../apiModel';
 
 export default class Group extends ApiModel{
     get primaryKey() {
