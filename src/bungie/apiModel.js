@@ -1,9 +1,10 @@
 import API from '../api/bungieApi';
 
 export default class ApiModel{
-    constructor(id) {
-        this.api = API;
+    constructor(id, access) {
+        this.api = new API(access);
         this.isRecord = false;
+        this.access = access || null;
 
         if(typeof this.get === 'function' && !isNaN(id)) {
             return this.get(id);
@@ -43,6 +44,12 @@ export default class ApiModel{
         return cleanObject;
     }
 
+    enforceAuth() {
+        if (!this.access) {
+            throw new Error("Authentication data must be present to make this call");
+        }
+    }
+
     processId(id) {
         if(!id && this.isRecord === true && this.primaryKey !== false) {
             return this.id;
@@ -71,6 +78,10 @@ export default class ApiModel{
         
                 return results;
             });
+    }
+
+    async recordPost(route, data) {
+        return await this.api.post(route, data)
     }
 
     wrapResponse(obj) {

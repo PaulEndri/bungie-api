@@ -1,7 +1,7 @@
 import User from './bungie/models/user';
 import Group from './bungie/models/group';
 import API from './api/bungieApi';
-import Destiny2Profile from './bungie/models/d2profile';
+import Destiny2Profile from './bungie/models/player';
 
 module.exports = {
     User:  User,
